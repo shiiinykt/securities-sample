@@ -1,0 +1,1 @@
+web:    java -jar build/libs/shiiinykt-securities-sample-0.1.jar

@@ -1,0 +1,40 @@
+{% import Meta_Template_CONVERT %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Script-Type" content="text/javascript">
+		
+		<title>サンプル証券</title>
+		
+		<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="/js/custom.js"></script>
+		
+		<link rel="stylesheet" href="/css/skeleton.css">
+		<link rel="stylesheet" href="/css/normalize.css">
+		<link rel="stylesheet" href="/css/custom.css">
+		
+	
+	</head>
+	<body>
+			<div class="section header">
+				<div class="container">
+					<a href="{{ Meta_URL_INDEX }}" class="title">
+						サンプル証券
+					</a>
+{% if accountName is empty %}
+					<a href="{{ Meta_URL_LOGIN }}" class="u-pull-right user">ログイン</a>
+{% else %}
+					<a href="{{ Meta_URL_REFERENCE_ORDER }}" class="u-pull-right user">{{ accountName}}</a>
+{% endif %}
+				</div>
+			</div>
+
+		<div class="section content">
+			{% block content %}{% endblock %}
+		</div>
+	
+	</body>
+</html>

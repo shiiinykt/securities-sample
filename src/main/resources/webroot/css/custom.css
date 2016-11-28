@@ -1,0 +1,81 @@
+.p-top-15 {
+    padding-top: 15px;
+}
+
+.login-form {
+    padding: 25px;
+    margin: 100px auto 0px auto;
+    max-width: 550px;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+}
+
+.error {
+	color: #FF0000;
+}
+
+.center {
+	text-align: center;
+}
+
+.header {
+	font-size: 3rem;
+	padding: 3px;
+}
+
+a.title {
+	color: #000000;
+	text-decoration: none;
+}
+
+.stock-name {
+	max-width: 200px;
+	word-wrap: break-word;
+}
+
+.stock-info {
+	font-size: 1.2rem;
+	color: #999999;
+}
+
+.search-header {
+	line-height: 2;
+	font-weight: bold;
+}
+
+.search-body {
+	line-height: 1.5;
+}
+
+.stock-record:hover {
+	background-color: #AAE0F0;
+}
+
+.search-wrapper {
+	overflow: hidden;
+}
+
+.search-wrapper .query {
+	position: absolute;
+	padding-right:90px;
+}
+
+.search-wrapper .submit {
+	position: relative;
+}
+
+.m-left-20 {
+	margin-left: 20px;
+}
+
+.order-form {
+    padding: 25px;
+    margin: 50px auto 0px auto;
+    max-width: 750px;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+}
+
+.user {
+	font-size: 1.8rem; 
+}

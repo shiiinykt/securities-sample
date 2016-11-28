@@ -1,0 +1,33 @@
+{% extends Meta_Template_LAYOUT %} 
+
+{% block content %}
+{% if orders is not empty %}
+<div class="container">
+	<table class="u-full-width">
+		<thead class="search-header">
+			<tr>
+				<td>銘柄</td>
+				<td>数量</td>
+				<td>注文</td>
+				<td>預り区分</td>
+				<td>状態</td>
+			</tr>
+		</thead>
+		<tbody class="search-body">
+			{% for order in orders %}
+			<tr class="stock-record">
+				<td class="stock-name">{{ order.name }}<br>
+				<span class="stock-info">{{ order.code}}&nbsp;&nbsp;{{ order.market }}</span></td>
+				<td>{{ order.amount | numberformat("#,###株") }}</td>
+				<td>{{ convertOrderType(order.orderType) }}<br>
+				{{ order.price | numberformat("#,###.#円") }}</td>
+				<td>{{ convertDepositType(order.depositType) }}</td>
+				<td>{{ convertStatus(order.status) }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endif %}
+
+{% endblock %}

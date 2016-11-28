@@ -1,0 +1,19 @@
+{% macro convertOrderType(orderType) %}
+{% if orderType == "limit" %}指値
+{% elseif orderType=="market" %}成行
+{% endif %}
+{% endmacro%}
+
+{% macro convertDepositType(depositType) %}
+{% if depositType=="specific" %}特定
+{% elseif depositType == "general" %}一般
+{% elseif depositType == "nisa" %}NISA
+{% endif %}
+{% endmacro%}
+
+{% macro convertStatus(status) %}
+{% if status=="order" %}注文中
+{% elseif status == "cancel" %}注文取消
+{% elseif status == "contract" %}約定
+{% endif %}
+{% endmacro%}

@@ -1,0 +1,16 @@
+{% extends Meta_Template_LAYOUT %} 
+
+{% block content %}
+	<div class="container order-form">
+		<div class="row">
+			<div class="three columns">注文ID</div>
+			<div class="nine columns m-left-20">{{ orderId }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="twelve columns"><a href="{{ Meta_URL_INDEX }}">トップへ戻る</a></div>
+		</div>
+	</div>
+
+{% endblock %}
