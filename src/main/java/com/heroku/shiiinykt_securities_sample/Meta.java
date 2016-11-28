@@ -1,4 +1,4 @@
-package com.heroku.shiiinykt_securiteis_sample;
+package com.heroku.shiiinykt_securities_sample;
 
 public class Meta {
 	

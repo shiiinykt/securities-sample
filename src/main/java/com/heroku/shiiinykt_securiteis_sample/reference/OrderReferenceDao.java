@@ -2,9 +2,9 @@ package com.heroku.shiiinykt_securiteis_sample.reference;
 
 import java.util.List;
 
-import com.heroku.shiiinykt_securiteis_sample.AbstractDao;
 import com.heroku.shiiinykt_securiteis_sample.order.StockOrder;
 import com.heroku.shiiinykt_securiteis_sample.stock.Stock;
+import com.heroku.shiiinykt_securities_sample.AbstractDao;
 import com.iciql.Db;
 
 public class OrderReferenceDao extends AbstractDao {

@@ -2,7 +2,7 @@ package com.heroku.shiiinykt_securiteis_sample.order;
 
 import java.util.List;
 
-import com.heroku.shiiinykt_securiteis_sample.AbstractDao;
+import com.heroku.shiiinykt_securities_sample.AbstractDao;
 import com.iciql.Db;
 
 public class StockOrderDao extends AbstractDao {

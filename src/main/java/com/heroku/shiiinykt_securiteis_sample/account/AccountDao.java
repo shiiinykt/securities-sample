@@ -2,7 +2,7 @@ package com.heroku.shiiinykt_securiteis_sample.account;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import com.heroku.shiiinykt_securiteis_sample.AbstractDao;
+import com.heroku.shiiinykt_securities_sample.AbstractDao;
 import com.iciql.Db;
 
 public class AccountDao extends AbstractDao{

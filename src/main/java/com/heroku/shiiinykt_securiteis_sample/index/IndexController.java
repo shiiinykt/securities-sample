@@ -3,10 +3,10 @@ package com.heroku.shiiinykt_securiteis_sample.index;
 import java.util.Map;
 
 import com.google.inject.Inject;
-import com.heroku.shiiinykt_securiteis_sample.AttributeFactory;
-import com.heroku.shiiinykt_securiteis_sample.Meta;
 import com.heroku.shiiinykt_securiteis_sample.stock.StockService;
 import com.heroku.shiiinykt_securiteis_sample.utils.ViewUtil;
+import com.heroku.shiiinykt_securities_sample.AttributeFactory;
+import com.heroku.shiiinykt_securities_sample.Meta;
 
 import spark.Request;
 import spark.Response;
