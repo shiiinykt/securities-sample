@@ -24,7 +24,6 @@ public class OrderController {
 	private static String STOCK = "stock";
 	private static String ORDER = "order";
 	private static String TRANZACTION = "tranzaction";
-	private static String ORDER_ID = "orderId";
 	
 	private static String PARAM_ORDER_VALUE = "OV_";
 	private static String PARAM_ORDER_KEY = "OK_";
@@ -96,11 +95,16 @@ public class OrderController {
 	public static Route finsh = (Request req, Response res) -> {
 		Map<String, Object> attributes = AttributeFactory.create(req);
 		
+		String accountId = ((Account) req.session().attribute(Meta.Parameter.ACCOUNT)).getAccountId();
+		
 		@NonNull 
 		String orderId = req.session().attribute(getParamOderKey(req.queryParams(Meta.Parameter.TRANZACTION)));
 		req.session().removeAttribute(getParamOderKey(req.queryParams(Meta.Parameter.TRANZACTION)));
 		
-		attributes.put(ORDER_ID, orderId);
+		StockOrder order = service.find(accountId, orderId);
+
+		attributes.put(ORDER, order);
+		attributes.put(STOCK, stockService.find(order.getCode()));
 		
 		return ViewUtil.render(attributes, Meta.Template.ORDER_FINISH);
 	};

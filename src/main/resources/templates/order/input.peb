@@ -1,67 +1,83 @@
 {% extends Meta_Template_LAYOUT %} 
 
 {% block content %}
-<form method="post">
-	<div class="container order-form">
-		<div class="row">
-			<div class="three columns">銘柄</div>
-			<div class="six columns m-left-20">{{ stock.name }}<br>
-				<span class="stock-info">{{ stock.code }}&nbsp;&nbsp;{{ stock.market }}</span>
-				<input type="hidden" name="code" value="{{ stock.code}}" />
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="three columns">現在値</div>
-			<div class="three columns m-left-20">{{ stock.price | numberformat("#,###.#円") }}</div>
-			<div class="three columns">前日比</div>
-			<div class="three columns m-left-20">{{ stock.previousRatio | numberformat("###.#%") }}</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="three columns">数量</div>
-			<div class="eight columns m-left-20">
-				<input class="" type="number" step="{{ stock.unit }}" min="{{ stock.unit }}" name="{{ Meta_Parameter_AMOUNT }}" value="{{ order.amount }}" required>株
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="three columns">注文区分</div>
-			<div class="two columns m-left-20">
-				<label><input type="radio" name="{{ Meta_Parameter_ORDER_TYPE }}" value="market" checked>成行</label>
-			</div>
-			<div class="two columns m-left-20">
-				<label><input type="radio" name="{{ Meta_Parameter_ORDER_TYPE }}" value="limit">指値</label>
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="three columns">価格</div>
-			<div class="four columns m-left-20">
-				<input id="price" type="number" step="{% if stock.topix100 == true %}0.1{% else %}1{% endif %}" min="{{ stock.minPrice}}" max="{{ stock.maxPrice }}" name="{{ Meta_Parameter_PRICE}}" value="{{ order.price }}" disabled>円<br>
-				<span class="stock-info">{{ stock.minPrice | numberformat("#,###.#円")}}〜{{ stock.maxPrice | numberformat("#,###.#円") }}</span>
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="three columns">預り区分</div>
-			<div class="three columns m-left-20">
-				<label><input type="radio" name="{{ Meta_Parameter_DEPOSIT_TYPE }}" value="specific" checked>特定</label>
-			</div>
-			<div class="three columns m-left-20">
-				<label><input type="radio" name="{{ Meta_Parameter_DEPOSIT_TYPE }}" value="general">一般</label>
-			</div>
-				<div class="three columns m-left-20">
-				<label><input type="radio" name="{{ Meta_Parameter_DEPOSIT_TYPE }}" value="nisa">NISA</label>
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="twelve columns">
-				<input class="button-primary" type="submit" value="確認">
-			</div>
-		</div>
+<div class="block">
+	<h3 class="page-header">取引入力</h3>
+</div>
 
-	</div>
-</form>
+<div class="block">
+	<form action="{{ Meta_URL_ORDER_INPUT }}" method="post">
+		<div class="row">
+			<div class="col-md-3">銘柄</div>
+			<div class="col-md-9">{{ stock.name }}<br>
+				<span class="stock-info">{{ stock.code }}&nbsp;&nbsp;{{ stock.market }}</span>
+				<input type="hidden" name="{{ Meta_Parameter_CODE }}" value="{{ stock.code}}" />
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3">現在値</div>
+			<div class="col-md-9">{{ stock.price | numberformat("#,###.#円") }}</div>
+			</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3">前日比</div>
+			<div class="col-md-9">{{ stock.previousRatio | numberformat("###.#%") }}</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3">数量</div>
+			<div class="col-md-3">
+				<div class="input-group">
+					<input type="number" class="form-control" step="{{ stock.unit }}" min="{{ stock.unit }}" name="{{ Meta_Parameter_AMOUNT }}" value="{{ order.amount }}" required>
+					<span class="input-group-addon">株</span>
+  				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3">注文区分</div>
+			<div class="col-md-9 form-group">
+				<div class="radio-inline">
+					<label><input type="radio" name="{{ Meta_Parameter_ORDER_TYPE }}" value="market" checked>成行</label>
+				</div>
+				<div class="radio-inline">
+					<label><input type="radio" name="{{ Meta_Parameter_ORDER_TYPE }}" value="limit">指値</label>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3">価格</div>
+			<div class="col-md-3">
+				<div class="input-group">
+					<input type="number" id="price" class="form-control" step="{% if stock.topix100 == true %}0.1{% else %}1{% endif %}" min="{{ stock.minPrice}}" max="{{ stock.maxPrice }}" name="{{ Meta_Parameter_PRICE}}" value="{{ order.price }}" disabled>
+					<span class="input-group-addon">円</span>
+  				</div><br>
+  				<span class="stock-info">値幅&nbsp;&nbsp;{{ stock.minPrice | numberformat("#,###.#円")}}〜{{ stock.maxPrice | numberformat("#,###.#円") }}</span>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3">預り区分</div>
+			<div class="col-md-9 form-group">
+				<div class="radio-inline">
+					<label><input type="radio" name="{{ Meta_Parameter_DEPOSIT_TYPE }}" value="specific" checked>特定</label>
+				</div>
+				<div class="radio-inline">
+					<label><input type="radio" name="{{ Meta_Parameter_DEPOSIT_TYPE }}" value="general">一般</label>
+				</div>
+				<div class="radio-inline">
+					<label><input type="radio" name="{{ Meta_Parameter_DEPOSIT_TYPE }}" value="nisa">NISA</label>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12">
+				<input class="btn btn-primary" type="submit" value="確認">
+			</div>
+		</div>
+	</form>
+</div>
 {% endblock %}

@@ -1,40 +1,56 @@
 {% import Meta_Template_CONVERT %}
 
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="Content-Script-Type" content="text/javascript">
-		
-		<title>サンプル証券</title>
-		
-		<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript" src="/js/custom.js"></script>
-		
-		<link rel="stylesheet" href="/css/skeleton.css">
-		<link rel="stylesheet" href="/css/normalize.css">
-		<link rel="stylesheet" href="/css/custom.css">
-		
-	
-	</head>
-	<body>
-			<div class="section header">
-				<div class="container">
-					<a href="{{ Meta_URL_INDEX }}" class="title">
-						サンプル証券
-					</a>
-{% if accountName is empty %}
-					<a href="{{ Meta_URL_LOGIN }}" class="u-pull-right user">ログイン</a>
-{% else %}
-					<a href="{{ Meta_URL_REFERENCE_ORDER }}" class="u-pull-right user">{{ accountName}}</a>
-{% endif %}
-				</div>
-			</div>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
 
-		<div class="section content">
-			{% block content %}{% endblock %}
+<title>サンプル証券</title>
+
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/custom.js"></script>
+
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/custom.css">
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only"></span> 
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{{ Meta_URL_INDEX }}">サンプル証券</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="{{ Meta_URL_INDEX }}">取引</a></li>
+					<li><a href="{{ Meta_URL_REFERENCE_ORDER }}">注文履歴</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+ 					<li>
+{% if accountName is empty %}
+ 						<a href="{{ Meta_URL_LOGIN }}">ログイン</a>
+ {% else %}
+ 						<a href="javascript:void(0)" onclick="document.postLogout.submit(); return false;">ログアウト</a>
+ 						<form name="postLogout" action="{{ Meta_URL_LOGOUT }}" method="POST"></form>
+{% endif %}
+ 					</li>
+				</ul>
+			</div>
 		</div>
-	
-	</body>
+	</nav>
+
+	<div class="col-md-9" role="main">{% block content %}{% endblock %}</div>
+
+</body>
 </html>

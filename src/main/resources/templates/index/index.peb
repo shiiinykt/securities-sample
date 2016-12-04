@@ -1,40 +1,51 @@
 {% extends Meta_Template_LAYOUT %} 
 
 {% block content %}
-<div class="container">
+<div class="block">
+	<h3 class="page-header">トップページ</h3>
+</div>
+
+<div class="block">
 	<form method="get">
 		<div class="row">
-			<div class="twelve columns search-wrapper">
-				<div class="u-full-width query">
-					<input class="u-full-width" type="text" placeholder="銘柄名・銘柄コード" name="{{ Meta_Parameter_QUERY }}" value="{{ query }}" autofocus>
-				</div>
-				<input class="button-primary u-pull-right submit" type="submit" value="検索">
+			<div class="col-lg-12">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="銘柄名・銘柄コード" name="{{ Meta_Parameter_QUERY }}" value="{{ query }}" autofocus>
+					<span class="input-group-btn">
+						<input class="btn btn-primary" type="submit" value="検索">
+					</span>
+	    		</div>
 			</div>
 		</div>
 	</form>
 </div>
 
 {% if stocks is not empty %}
-<div class="container">
-	<table class="u-full-width">
-		<thead class="search-header">
-			<tr>
-				<td>銘柄</td>
-				<td>現在値</td>
-				<td>前日比</td>
-			</tr>
-		</thead>
-		<tbody class="search-body">
-			{% for stock in stocks %}
-			<tr class="stock-record" onclick="location.href='{{ Meta_URL_ORDER_INPUT}}?{{ Meta_Parameter_CODE }}={{ stock.code }}'">
-				<td class="stock-name">{{ stock.name }}<br>
-				<span class="stock-info">{{ stock.code}}&nbsp;&nbsp;{{ stock.market }}</span></td>
-				<td>{{ stock.price | numberformat("#,###.#円") }}</td>
-				<td>{{ stock.previousRatio | numberformat("###.#%") }}</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+<div class="block">
+	<div class="panel panel-default">
+	  <!-- Default panel contents -->
+	  <div class="panel-heading">検索結果</div>
+	
+	  	<table class="table table-hover">
+			<thead>
+				<tr>
+					<td>銘柄</td>
+					<td>現在値</td>
+					<td>前日比</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% for stock in stocks %}
+				<tr onclick="location.href='{{ Meta_URL_ORDER_INPUT}}?{{ Meta_Parameter_CODE }}={{ stock.code }}'">
+					<td class="stock-name">{{ stock.name }}<br>
+					<span class="stock-info">{{ stock.code}}&nbsp;&nbsp;{{ stock.market }}</span></td>
+					<td>{{ stock.price | numberformat("#,###.#円") }}</td>
+					<td>{{ stock.previousRatio | numberformat("###.#%") }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 </div>
 {% endif %}
 

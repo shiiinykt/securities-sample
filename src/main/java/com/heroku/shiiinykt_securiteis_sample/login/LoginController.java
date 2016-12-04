@@ -29,6 +29,7 @@ public class LoginController {
 	};
 	
 	public static Route indexHandler = (Request req, Response res) -> {
+		
 		Map<String, Object> attribute = AttributeFactory.create(req);
 
 		Account account = service.find(req.queryParams(Meta.Parameter.NAME), req.queryParams(Meta.Parameter.PASSWORD));
@@ -40,7 +41,6 @@ public class LoginController {
 			if (StringUtils.isNotEmpty(req.queryParams(Meta.Parameter.REDIRECT))) {
 				redirect = req.queryParams(Meta.Parameter.REDIRECT);
 			}
-			
 			res.redirect(redirect, 301);
 		}
 		
@@ -49,4 +49,12 @@ public class LoginController {
 		
 		return ViewUtil.render(attribute, Meta.Template.LOGIN);
 	};
+	
+	public static Route logoutHandler = (Request req, Response res) -> {
+		req.session().invalidate();
+		res.redirect(Meta.URL.INDEX, 301);
+		
+		return ViewUtil.render(null, Meta.Template.LOGIN);
+	};
+	
 }

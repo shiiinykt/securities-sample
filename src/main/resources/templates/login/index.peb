@@ -2,25 +2,42 @@
 
 
 {% block content %}
-<form method="post">
-	<div class="container login-form">
-		<div class="row">
+<div class="block">
+	<h3 class="page-header">ログイン</h3>
+</div>
+
+<div class="block">
 {% if message == true %}
-			<div class="twelve columns center error">
-				顧客IDまたはパスワードが正しくありません。</div>
+	<div class="row">
+		<div class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	 		顧客IDまたはパスワードが正しくありません。
+		</div>
+	</div>
 {% endif %}
-			<div class="twelve columns">
-				<label for="{{ Meta_Parameter_NAME }}">顧客ID</label> <input class="u-full-width" type="text" name="{{ Meta_Parameter_NAME }}" value="{{ name }}" required autofocus>
-			</div>
-			<div class="twelve columns">
-				<label for="{{ Meta_Parameter_PASSWORD }}">パスワード</label> <input class="u-full-width" type="password" name="{{ Meta_Parameter_PASSWORD }}" required>
-			</div>
-			<div class="twelve columns p-top-15">
-				<input class="button-primary u-pull-right" type="submit" value="ログイン">
+	<form method="post">
+		<div class="panel panel-default form-group">
+	  		<div class="panel-body">
+				<div class="row">
+					<div class="col-md-2">顧客ID</div>
+					<div class="col-md-10">
+						<input type="text" class="form-control" name="{{ Meta_Parameter_NAME }}" value="{{ name }}" required autofocus>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">パスワード</div>
+					<div class="col-md-10">
+						<input type="password" class="form-control" name="{{ Meta_Parameter_PASSWORD }}" required>
+					</div>
+				</div>
+				<div class="row">
+					<div class="twelve columns block">
+						<input class="btn btn-primary pull-right" type="submit" value="ログイン">
+					</div>
+				</div>
 			</div>
 		</div>
-
-	</div>
-</form>
+	</form>
+</div>
 
 {% endblock %}

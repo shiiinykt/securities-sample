@@ -1,16 +1,61 @@
 {% extends Meta_Template_LAYOUT %} 
 
 {% block content %}
-	<div class="container order-form">
-		<div class="row">
-			<div class="three columns">注文ID</div>
-			<div class="nine columns m-left-20">{{ orderId }}
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="twelve columns"><a href="{{ Meta_URL_INDEX }}">トップへ戻る</a></div>
+<div class="block">
+	<h3 class="page-header">取引完了</h3>
+</div>
+
+<div class="block">
+	<div class="row">
+		<div class="col-md-3">注文ID</div>
+		<div class="col-md-9">{{ order.orderId }}</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-3">銘柄</div>
+		<div class="col-md-9">{{ stock.name}}<br>
+			<span class="stock-info">{{ stock.code}}&nbsp;&nbsp;{{stock.market }}</span>
 		</div>
 	</div>
-
+	<hr>
+	<div class="row">
+		<div class="col-md-3">現在値</div>
+		<div class="col-md-9">{{ stock.price | numberformat("#,###.#円") }}</div>
+	</div>
+	<div class="row">
+			<div class="col-md-3">前日比</div>
+			<div class="col-md-9">{{ stock.previousRatio | numberformat("###.#%") }}</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-3">数量</div>
+		<div class="col-md-9">{{ order.amount | numberformat("#,###株") }}</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-3">注文区分</div>
+		<div class="col-md-9">{{ convertOrderType(orderType = order.orderType) }}</div>
+	</div>
+	<hr>
+{% if order.orderType == "limit" %}
+	<div class="row">
+		<div class="col-md-3">価格</div>
+		<div class="col-md-9">
+			{{ order.price | numberformat("#,###.#円")}}<br>
+			<span class="stock-info">{{ stock.minPrice | numberformat("#,###.#円") }}〜{{ stock.maxPrice | numberformat("#,###.#円") }}</span>
+		</div>
+	</div>
+	<hr>
+{% endif %}
+	<div class="row">
+		<div class="col-md-3">預り区分</div>
+		<div class="col-md-9">
+			{{ convertDepositType(depositType = order.depositType) }}
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-12"><a href="{{ Meta_URL_INDEX }}">トップへ戻る</a></div>
+	</div>
+</div>
 {% endblock %}

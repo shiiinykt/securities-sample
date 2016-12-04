@@ -22,7 +22,8 @@ public class Filters {
 				}
 				redirect = "?" + Meta.Parameter.REDIRECT + "=" + EncoderUtil.urlEncode(redirectUrl);
 			}
-
+			
+			res.header("Cache-Control", "no-cache");
 			res.redirect(Meta.URL.LOGIN + redirect, 301);
 		};
 	};

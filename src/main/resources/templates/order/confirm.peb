@@ -1,63 +1,68 @@
 {% extends "templates/layout.peb" %}
 
 {% block content %}
-<form action="{{Meta_URL_ORDER_CONFIRM }}" method="post">
-	<div class="container order-form">
+<div class="block">
+	<h3 class="page-header">取引確認</h3>
+</div>
+
+<div class="block">
+	<form action="{{ Meta_URL_ORDER_CONFIRM }}" method="post">
 		<div class="row">
-			<div class="three columns">銘柄</div>
-			<div class="six columns m-left-20">{{ stock.name}}<br>
+			<div class="col-md-3">銘柄</div>
+			<div class="col-md-9">{{ stock.name}}<br>
 				<span class="stock-info">{{ stock.code}}&nbsp;&nbsp;{{stock.market }}</span>
 			</div>
 		</div>
 		<hr>
 		<div class="row">
-			<div class="three columns">現在値</div>
-			<div class="three columns m-left-20">{{ stock.price | numberformat("#,###.#円") }}</div>
-			<div class="three columns">前日比</div>
-			<div class="three columns m-left-20">{{ stock.previousRatio | numberformat("###.#%") }}</div>
+			<div class="col-md-3">現在値</div>
+			<div class="col-md-9">{{ stock.price | numberformat("#,###.#円") }}</div>
+		</div>
+		<div class="row">
+				<div class="col-md-3">前日比</div>
+				<div class="col-md-9">{{ stock.previousRatio | numberformat("###.#%") }}</div>
 		</div>
 		<hr>
 		<div class="row">
-			<div class="three columns">数量</div>
-			<div class="eight columns m-left-20">{{ order.amount | numberformat("#,###株") }}</div>
+			<div class="col-md-3">数量</div>
+			<div class="col-md-9">{{ order.amount | numberformat("#,###株") }}</div>
 		</div>
 		<hr>
 		<div class="row">
-			<div class="three columns">注文区分</div>
-			<div class="two columns m-left-20">{{ convertOrderType(orderType = order.orderType) }}</div>
+			<div class="col-md-3">注文区分</div>
+			<div class="col-md-9">{{ convertOrderType(orderType = order.orderType) }}</div>
 		</div>
 		<hr>
-{% if order.orderType == "limit" %}
+	{% if order.orderType == "limit" %}
 		<div class="row">
-			<div class="three columns">価格</div>
-			<div class="four columns m-left-20">
+			<div class="col-md-3">価格</div>
+			<div class="col-md-9">
 				{{ order.price | numberformat("#,###.#円")}}<br>
 				<span class="stock-info">{{ stock.minPrice | numberformat("#,###.#円") }}〜{{ stock.maxPrice | numberformat("#,###.#円") }}</span>
 			</div>
 		</div>
 		<hr>
-{% endif %}
+	{% endif %}
 		<div class="row">
-			<div class="three columns">預り区分</div>
-			<div class="three columns m-left-20">
+			<div class="col-md-3">預り区分</div>
+			<div class="col-md-9">
 				{{ convertDepositType(depositType = order.depositType) }}
 			</div>
 		</div>
 		<hr>
 		<div class="row">
-			<div class="three columns">PINコード</div>
-			<div class="eight columns m-left-20">
+			<div class="col-md-3">PINコード</div>
+			<div class="col-md-9">
 				<input type="number" name="{{ Meta_Parameter_PIN }}" maxlength="4" required autocomplete="off">
 			</div>
 		</div>
 		<hr>
 		<div class="row">
-			<div class="twelve columns">
+			<div class="tcol-md-12">
 				<input type="hidden" name="{{ Meta_Parameter_TRANZACTION }}" value="{{ tranzaction }}">
-				<input class="button-primary" type="submit" value="完了">
+				<input class="btn btn-primary" type="submit" value="完了">
 			</div>
 		</div>
-
-	</div>
-</form>
+	</form>
+</div>
 {% endblock %}

@@ -34,6 +34,7 @@ public class Application {
 		
 		get(Meta.URL.LOGIN, LoginController.index);
 		post(Meta.URL.LOGIN, LoginController.indexHandler);
+		post(Meta.URL.LOGOUT, LoginController.logoutHandler);
 		
 		get(Meta.URL.INDEX, IndexController.index);
 		

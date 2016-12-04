@@ -1,10 +1,14 @@
 {% extends Meta_Template_LAYOUT %} 
 
 {% block content %}
+<div class="block">
+	<h3 class="page-header">注文履歴</h3>
+</div>
+
 {% if orders is not empty %}
-<div class="container">
-	<table class="u-full-width">
-		<thead class="search-header">
+<div class="block table-responsive">
+	<table class="table table-bordered">
+		<thead>
 			<tr>
 				<td>銘柄</td>
 				<td>数量</td>
@@ -13,10 +17,10 @@
 				<td>状態</td>
 			</tr>
 		</thead>
-		<tbody class="search-body">
+		<tbody>
 			{% for order in orders %}
-			<tr class="stock-record">
-				<td class="stock-name">{{ order.name }}<br>
+			<tr>
+				<td>{{ order.name }}<br>
 				<span class="stock-info">{{ order.code}}&nbsp;&nbsp;{{ order.market }}</span></td>
 				<td>{{ order.amount | numberformat("#,###株") }}</td>
 				<td>{{ convertOrderType(order.orderType) }}<br>

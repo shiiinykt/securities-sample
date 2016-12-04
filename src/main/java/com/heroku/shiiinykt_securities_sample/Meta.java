@@ -4,6 +4,7 @@ public class Meta {
 	
 	public class URL {
 		public static final String LOGIN = "/login";
+		public static final String LOGOUT = "/logout";
 		public static final String INDEX = "/";
 		public static final String ORDER = "/order";
 		public static final String ORDER_INPUT = ORDER + "/input";
