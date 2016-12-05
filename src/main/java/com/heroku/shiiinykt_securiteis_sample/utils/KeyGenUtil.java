@@ -11,7 +11,7 @@ public class KeyGenUtil {
 	}
 	
 	public static String getOrderId() {
-		return UUID.randomUUID().toString();
+		return UUID.randomUUID().toString().toUpperCase();
 	}
 
 }

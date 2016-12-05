@@ -22,30 +22,25 @@
 
 {% if stocks is not empty %}
 <div class="block">
-	<div class="panel panel-default">
-	  <!-- Default panel contents -->
-	  <div class="panel-heading">検索結果</div>
-	
-	  	<table class="table table-hover">
-			<thead>
-				<tr>
-					<td>銘柄</td>
-					<td>現在値</td>
-					<td>前日比</td>
-				</tr>
-			</thead>
-			<tbody>
-				{% for stock in stocks %}
-				<tr onclick="location.href='{{ Meta_URL_ORDER_INPUT}}?{{ Meta_Parameter_CODE }}={{ stock.code }}'">
-					<td class="stock-name">{{ stock.name }}<br>
-					<span class="stock-info">{{ stock.code}}&nbsp;&nbsp;{{ stock.market }}</span></td>
-					<td>{{ stock.price | numberformat("#,###.#円") }}</td>
-					<td>{{ stock.previousRatio | numberformat("###.#%") }}</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+  	<table class="table table-hover">
+		<thead>
+			<tr>
+				<td>銘柄</td>
+				<td>現在値</td>
+				<td>前日比</td>
+			</tr>
+		</thead>
+		<tbody>
+			{% for stock in stocks %}
+			<tr onclick="location.href='{{ Meta_URL_ORDER_INPUT}}?{{ Meta_Parameter_CODE }}={{ stock.code }}'">
+				<td class="stock-name">{{ stock.name }}<br>
+				<span class="stock-info">{{ stock.code}}&nbsp;&nbsp;{{ stock.market }}</span></td>
+				<td>{{ stock.price | numberformat("#,###.#円") }}</td>
+				<td>{{ stock.previousRatio | numberformat("###.#%") }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
 {% endif %}
 
