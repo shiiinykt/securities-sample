@@ -5,12 +5,15 @@ import java.io.IOException;
 import com.google.inject.Inject;
 import com.heroku.shiiinykt_securiteis_sample.utils.ViewUtil;
 import com.linecorp.bot.client.LineMessagingServiceBuilder;
+import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.CallbackRequest;
+import com.linecorp.bot.model.event.FollowEvent;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 
+import lombok.SneakyThrows;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -29,6 +32,9 @@ public class CallbackController {
 					if (((MessageEvent<?>) event).getMessage() instanceof TextMessageContent) {
 						handleTextMessageEvent((MessageEvent<?>) event);
 					}
+					
+				} else if (event instanceof FollowEvent) {
+					handelFollowEvnet((FollowEvent) event);
 				}
 			});
 		} catch (Exception e) {
@@ -39,21 +45,33 @@ public class CallbackController {
 		return ViewUtil.render(new Callback("OK"));
 	};
 
+	@SneakyThrows(IOException.class)
 	private static void handleTextMessageEvent(MessageEvent<?> event) {
 
-		try {
-			TextMessageContent content = (TextMessageContent) event.getMessage();
-	
-			TextMessage textMessage = new TextMessage(content.getText() + "!!");
-			ReplyMessage replyMessage = new ReplyMessage(event.getReplyToken(), textMessage);
-			LineMessagingServiceBuilder
-						.create(System.getenv("CHANNEL_ACCESS_TOKEN"))
-						.build()
-						.replyMessage(replyMessage)
-						.execute();
-			
-		} catch (IOException e) {
-		}
+		TextMessageContent content = (TextMessageContent) event.getMessage();
 		
+		TextMessage textMessage = new TextMessage(content.getText() + "!!");
+		ReplyMessage replyMessage = new ReplyMessage(event.getReplyToken(), textMessage);
+		LineMessagingServiceBuilder
+					.create(System.getenv("CHANNEL_ACCESS_TOKEN"))
+					.build()
+					.replyMessage(replyMessage)
+					.execute();
+	}
+	
+	@SneakyThrows(IOException.class)
+	private static void handelFollowEvnet(FollowEvent event) {
+		TextMessage textMessage = new TextMessage("hello");
+		PushMessage pushMessage = new PushMessage(
+		        event.getSource().getUserId(),
+		        textMessage
+		);
+		
+		LineMessagingServiceBuilder
+		.create(System.getenv("CHANNEL_ACCESS_TOKEN"))
+		.build()
+		.pushMessage(pushMessage)
+		.execute();
+
 	}
 }
