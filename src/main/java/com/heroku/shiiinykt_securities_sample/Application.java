@@ -6,6 +6,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.heroku.shiiinykt_securiteis_sample.index.IndexController;
 import com.heroku.shiiinykt_securiteis_sample.job.OrderJob;
+import com.heroku.shiiinykt_securiteis_sample.line.CallbackController;
 import com.heroku.shiiinykt_securiteis_sample.login.LoginController;
 import com.heroku.shiiinykt_securiteis_sample.order.OrderController;
 import com.heroku.shiiinykt_securiteis_sample.reference.ReferenceController;
@@ -22,7 +23,6 @@ import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
 public class Application {
-
 	
 	public static void main(final String[] args) throws SchedulerException {
 		init();
@@ -48,6 +48,8 @@ public class Application {
 		
 		before(Meta.URL.REFERENCE + "/*", Filters.auth);
 		get(Meta.URL.REFERENCE_ORDER, ReferenceController.order);
+		
+		post(Meta.URL.CALLBACK, CallbackController.callback);
 
 		
 	}
@@ -60,6 +62,7 @@ public class Application {
 				requestStaticInjection(IndexController.class);
 				requestStaticInjection(OrderController.class);
 				requestStaticInjection(ReferenceController.class);
+				requestStaticInjection(CallbackController.class);
 				
 				requestStaticInjection(OrderJob.class);
 			}

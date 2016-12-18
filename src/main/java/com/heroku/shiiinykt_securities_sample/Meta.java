@@ -12,6 +12,7 @@ public class Meta {
 		public static final String ORDER_FINISH = ORDER + "/finish";
 		public static final String REFERENCE = "/reference";
 		public static final String REFERENCE_ORDER = "/reference/order";
+		public static final String CALLBACK = "/callback";
 		
 	}
 	
@@ -44,5 +45,5 @@ public class Meta {
 		public static final String REFERENCE_ORDER = "templates/reference/order.peb";
 		
 	}
-
+	
 }

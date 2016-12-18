@@ -2,6 +2,7 @@ package com.heroku.shiiinykt_securiteis_sample.utils;
 
 import java.util.Map;
 
+import com.google.gson.Gson;
 import com.mitchellbosecke.pebble.loader.ClasspathLoader;
 import com.mitchellbosecke.pebble.loader.Loader;
 
@@ -22,5 +23,10 @@ public class ViewUtil {
 		loader.setPrefix(null);
 	
 		return new PebbleTemplateEngine(loader);
+	}
+	
+	public static String render(final Object model) {
+		Gson gson = new Gson();
+		return gson.toJson(model);
 	}
 }
