@@ -44,7 +44,7 @@ public class CallbackController {
 		try {
 			TextMessageContent content = (TextMessageContent) event.getMessage();
 	
-			TextMessage textMessage = new TextMessage(content.getText());
+			TextMessage textMessage = new TextMessage(content.getText() + "!!");
 			ReplyMessage replyMessage = new ReplyMessage(event.getReplyToken(), textMessage);
 			LineMessagingServiceBuilder
 						.create(System.getenv("CHANNEL_ACCESS_TOKEN"))
