@@ -1,4 +1,4 @@
-package com.heroku.shiiinykt_securiteis_sample.line;
+package com.heroku.shiiinykt_securiteis_sample.callback;
 
 import lombok.Value;
 

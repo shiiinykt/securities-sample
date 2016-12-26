@@ -1,11 +1,12 @@
-package com.heroku.shiiinykt_securiteis_sample.line;
+package com.heroku.shiiinykt_securiteis_sample.callback;
 
 import java.io.IOException;
 
 import com.google.inject.Inject;
+import com.heroku.shiiinykt_securiteis_sample.line.LineService;
 import com.heroku.shiiinykt_securiteis_sample.utils.ViewUtil;
+import com.heroku.shiiinykt_securities_sample.Meta;
 import com.linecorp.bot.client.LineMessagingServiceBuilder;
-import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.CallbackRequest;
 import com.linecorp.bot.model.event.FollowEvent;
@@ -22,6 +23,8 @@ public class CallbackController {
 
 	@Inject
 	private static CallbackService service;
+	@Inject
+	private static LineService lineService;
 
 	public static Route callback = (Request req, Response res) -> {
 
@@ -61,16 +64,16 @@ public class CallbackController {
 	
 	@SneakyThrows(IOException.class)
 	private static void handelFollowEvnet(FollowEvent event) {
-		TextMessage textMessage = new TextMessage("hello");
-		PushMessage pushMessage = new PushMessage(
-		        event.getSource().getUserId(),
-		        textMessage
-		);
+		String code = lineService.registory(event.getSource().getUserId());
+		
+		TextMessage textMessage = new TextMessage(Meta.URL.APP_URL + Meta.URL.LINE_REGISTORY + "?" + Meta.Parameter.CODE + "=" + code);
+		
+		ReplyMessage replyMessage = new ReplyMessage(event.getReplyToken(), textMessage);
 		
 		LineMessagingServiceBuilder
 		.create(System.getenv("CHANNEL_ACCESS_TOKEN"))
 		.build()
-		.pushMessage(pushMessage)
+		.replyMessage(replyMessage)
 		.execute();
 
 	}

@@ -3,6 +3,7 @@ package com.heroku.shiiinykt_securities_sample;
 public class Meta {
 	
 	public class URL {
+		public static final String APP_URL = "https://shiiinykt-securities-sample.herokuapp.com";
 		public static final String LOGIN = "/login";
 		public static final String LOGOUT = "/logout";
 		public static final String INDEX = "/";
@@ -13,6 +14,8 @@ public class Meta {
 		public static final String REFERENCE = "/reference";
 		public static final String REFERENCE_ORDER = "/reference/order";
 		public static final String CALLBACK = "/callback";
+		public static final String LINE = "/line";
+		public static final String LINE_REGISTORY = LINE + "/registory";
 		
 	}
 	
@@ -43,6 +46,7 @@ public class Meta {
 		public static final String ORDER_CONFIRM = "templates/order/confirm.peb";
 		public static final String ORDER_FINISH = "templates/order/finish.peb";
 		public static final String REFERENCE_ORDER = "templates/reference/order.peb";
+		public static final String LINE_REGISTORY = "templates/line/registory.peb";
 		
 	}
 	

@@ -1,4 +1,4 @@
-package com.heroku.shiiinykt_securiteis_sample.line.impl;
+package com.heroku.shiiinykt_securiteis_sample.callback.impl;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -8,8 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.heroku.shiiinykt_securiteis_sample.line.CallbackException;
-import com.heroku.shiiinykt_securiteis_sample.line.CallbackService;
+import com.heroku.shiiinykt_securiteis_sample.callback.CallbackException;
+import com.heroku.shiiinykt_securiteis_sample.callback.CallbackService;
 import com.linecorp.bot.client.LineSignatureValidator;
 import com.linecorp.bot.model.event.CallbackRequest;
 

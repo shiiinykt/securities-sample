@@ -4,9 +4,10 @@ package com.heroku.shiiinykt_securities_sample;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
+import com.heroku.shiiinykt_securiteis_sample.callback.CallbackController;
 import com.heroku.shiiinykt_securiteis_sample.index.IndexController;
 import com.heroku.shiiinykt_securiteis_sample.job.OrderJob;
-import com.heroku.shiiinykt_securiteis_sample.line.CallbackController;
+import com.heroku.shiiinykt_securiteis_sample.line.LineController;
 import com.heroku.shiiinykt_securiteis_sample.login.LoginController;
 import com.heroku.shiiinykt_securiteis_sample.order.OrderController;
 import com.heroku.shiiinykt_securiteis_sample.reference.ReferenceController;
@@ -50,6 +51,9 @@ public class Application {
 		get(Meta.URL.REFERENCE_ORDER, ReferenceController.order);
 		
 		post(Meta.URL.CALLBACK, CallbackController.callback);
+		
+		before(Meta.URL.LINE + "/*", Filters.auth);
+		get(Meta.URL.LINE_REGISTORY, LineController.registory);
 
 		
 	}
@@ -63,7 +67,7 @@ public class Application {
 				requestStaticInjection(OrderController.class);
 				requestStaticInjection(ReferenceController.class);
 				requestStaticInjection(CallbackController.class);
-				
+				requestStaticInjection(LineController.class);
 				requestStaticInjection(OrderJob.class);
 			}
 		});

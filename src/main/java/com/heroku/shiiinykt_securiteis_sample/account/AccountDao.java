@@ -29,9 +29,9 @@ public class AccountDao extends AbstractDao{
 		}
 	}
 	
-	public Long store(Account account) {
+	public void store(Account account) {
 		try (Db db = open()) {
-			return db.insertAndGetKey(account);
+			db.insert(account);
 		}
 	}
 

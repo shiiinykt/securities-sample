@@ -1,9 +1,9 @@
-package com.heroku.shiiinykt_securiteis_sample.line;
+package com.heroku.shiiinykt_securiteis_sample.callback;
 
 import java.io.IOException;
 
 import com.google.inject.ImplementedBy;
-import com.heroku.shiiinykt_securiteis_sample.line.impl.CallbackServiceImpl;
+import com.heroku.shiiinykt_securiteis_sample.callback.impl.CallbackServiceImpl;
 import com.linecorp.bot.model.event.CallbackRequest;
 
 import spark.Request;
