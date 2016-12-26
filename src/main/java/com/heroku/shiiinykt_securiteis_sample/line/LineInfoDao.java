@@ -37,7 +37,7 @@ public class LineInfoDao extends AbstractDao {
 
 	public void store(LineInfo info) {
 		try (Db db = open()) {
-			db.insert(info);
+			db.merge(info);
 		}
 	}
 }

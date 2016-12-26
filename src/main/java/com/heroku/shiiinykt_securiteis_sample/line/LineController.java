@@ -25,7 +25,7 @@ public class LineController {
 		LineInfo info = service.findByCode(code);
 		info.setAccountId(((Account) req.session().attribute(Meta.Parameter.ACCOUNT)).getAccountId());
 		
-		return ViewUtil.render(attributes, Meta.Template.REFERENCE_ORDER);
+		return ViewUtil.render(attributes, Meta.Template.LINE_REGISTORY);
 	};
 
 }
