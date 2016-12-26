@@ -17,6 +17,12 @@ public class LineServiceImpl implements LineService {
 	}
 
 	@Override
+	public LineInfo findByAccountId(String accountId) {
+		LineInfoDao dao = new LineInfoDao();
+		return dao.findByCode(accountId);
+	}
+	
+	@Override
 	public LineInfo findByCode(String code) {
 		LineInfoDao dao = new LineInfoDao();
 		return dao.findByCode(code);
@@ -49,5 +55,6 @@ public class LineServiceImpl implements LineService {
 		
 		dao.store(info);
 	}
+
 
 }

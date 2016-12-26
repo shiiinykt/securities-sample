@@ -8,6 +8,8 @@ public interface LineService {
 	
 	public LineInfo find(String userId);
 	
+	public LineInfo findByAccountId(String accountId);
+	
 	public LineInfo findByCode(String code);
 	
 	public String registory(String userId);

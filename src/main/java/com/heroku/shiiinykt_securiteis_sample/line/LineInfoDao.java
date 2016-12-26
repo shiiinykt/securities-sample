@@ -14,6 +14,17 @@ public class LineInfoDao extends AbstractDao {
 					.selectFirst();
 		}
 	}
+
+	public LineInfo findByAccountId(String accountId) {
+		try (Db db = open()) {
+			LineInfo l = new LineInfo();
+			
+			return db.from(l)
+					.where(l.getUserId()).is(accountId)
+					.and(l.getStatus()).is(LineInfo.ACTICVE)
+					.selectFirst();
+		}
+	}
 	
 	public LineInfo findByCode(String code) {
 		try (Db db = open()) {
