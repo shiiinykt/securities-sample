@@ -20,7 +20,7 @@ public class LineInfoDao extends AbstractDao {
 			LineInfo l = new LineInfo();
 			
 			return db.from(l)
-					.where(l.getUserId()).is(accountId)
+					.where(l.getAccountId()).is(accountId)
 					.and(l.getStatus()).is(LineInfo.ACTICVE)
 					.selectFirst();
 		}
