@@ -8,7 +8,7 @@ import com.iciql.Iciql.IQTable;
 import lombok.Data;
 
 @Data
-@IQTable
+@IQTable(name="line_info")
 public class LineInfo {
 	
 	public static String PROGRESS = "progress";
