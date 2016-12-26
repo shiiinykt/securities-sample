@@ -19,7 +19,7 @@ public class LineServiceImpl implements LineService {
 	@Override
 	public LineInfo findByAccountId(String accountId) {
 		LineInfoDao dao = new LineInfoDao();
-		return dao.findByCode(accountId);
+		return dao.findByAccountId(accountId);
 	}
 	
 	@Override
