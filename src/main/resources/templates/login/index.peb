@@ -1,6 +1,5 @@
 {% extends Meta_Template_LAYOUT %} 
 
-
 {% block content %}
 <div class="block">
 	<h3 class="page-header">ログイン</h3>

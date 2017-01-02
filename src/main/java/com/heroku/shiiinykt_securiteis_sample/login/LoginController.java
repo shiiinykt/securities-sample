@@ -27,7 +27,7 @@ public class LoginController {
 
 		return ViewUtil.render(attribute, Meta.Template.LOGIN);
 	};
-	
+
 	public static Route indexHandler = (Request req, Response res) -> {
 		
 		Map<String, Object> attribute = AttributeFactory.create(req);
