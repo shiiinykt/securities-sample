@@ -22,10 +22,12 @@ import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.template.ButtonsTemplate;
 
+import lombok.extern.slf4j.Slf4j;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+@Slf4j
 public class CallbackController {
 
 	@Inject
@@ -37,6 +39,8 @@ public class CallbackController {
 
 	public static Route callback = (Request req, Response res) -> {
 
+		log.debug(req.body());
+		
 		try {
 			CallbackRequest request = service.handle(req);
 			request.getEvents().stream().forEach(event -> {
@@ -75,7 +79,7 @@ public class CallbackController {
 		}
 		
 		TemplateMessage templateMessage = new TemplateMessage("This is buttons template", 
-				new ButtonsTemplate("https://www.misedas.net/item_images/item_group/l/6066/1311.jpg", content.getText(), content.getText(), actions));
+				new ButtonsTemplate(null, "検索結果", "キーワード：" + content.getText(), actions));
 		ReplyMessage replyMessage = new ReplyMessage(event.getReplyToken(), templateMessage);
 		
 		lineService.replyMessage(replyMessage);
