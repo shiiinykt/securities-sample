@@ -12,4 +12,6 @@ public interface AccountService {
 	
 	public void store(Account account);
 	
+	public boolean exist(String accountId);
+	
 }

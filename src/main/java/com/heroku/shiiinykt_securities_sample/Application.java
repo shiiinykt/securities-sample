@@ -4,6 +4,7 @@ package com.heroku.shiiinykt_securities_sample;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
+import com.heroku.shiiinykt_securiteis_sample.account.AccountContoraller;
 import com.heroku.shiiinykt_securiteis_sample.callback.CallbackController;
 import com.heroku.shiiinykt_securiteis_sample.index.IndexController;
 import com.heroku.shiiinykt_securiteis_sample.job.OrderJob;
@@ -54,6 +55,8 @@ public class Application {
 		
 		before(Meta.URL.LINE + "/*", Filters.auth);
 		get(Meta.URL.LINE_REGISTORY, LineController.registory);
+		
+		get(Meta.URL.ACCOUNT_REGISTORY, AccountContoraller.registory);
 
 		
 	}

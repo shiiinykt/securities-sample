@@ -16,6 +16,8 @@ public class Meta {
 		public static final String CALLBACK = "/callback";
 		public static final String LINE = "/line";
 		public static final String LINE_REGISTORY = LINE + "/registory";
+		public static final String ACCOUNT = "/account";
+		public static final String ACCOUNT_REGISTORY = ACCOUNT + "/registory";
 		
 	}
 	
@@ -25,6 +27,7 @@ public class Meta {
 		public static final String AMOUNT = "am";
 		public static final String CODE = "co";
 		public static final String DEPOSIT_TYPE = "dt";
+		public static final String ID = "id";
 		public static final String MESSAGE = "me";
 		public static final String NAME = "na";
 		public static final String ORDER_TYPE = "ot";
@@ -47,6 +50,7 @@ public class Meta {
 		public static final String ORDER_FINISH = "templates/order/finish.peb";
 		public static final String REFERENCE_ORDER = "templates/reference/order.peb";
 		public static final String LINE_REGISTORY = "templates/line/registory.peb";
+		public static final String ACCOUNT_REGISTORY = "templates/account/registory.peb";
 		
 	}
 	

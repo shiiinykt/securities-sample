@@ -32,7 +32,7 @@ public class LoginController {
 		
 		Map<String, Object> attribute = AttributeFactory.create(req);
 
-		Account account = service.find(req.queryParams(Meta.Parameter.NAME), req.queryParams(Meta.Parameter.PASSWORD));
+		Account account = service.find(req.queryParams(Meta.Parameter.ID), req.queryParams(Meta.Parameter.PASSWORD));
 
 		if (account != null) {
 			req.session(true).attribute(Meta.Parameter.ACCOUNT, account);

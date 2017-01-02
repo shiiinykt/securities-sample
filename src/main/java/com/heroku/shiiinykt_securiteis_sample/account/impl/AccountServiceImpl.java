@@ -24,4 +24,10 @@ public class AccountServiceImpl implements AccountService {
 		dao.store(account);
 	}
 
+	@Override
+	public boolean exist(String accountId) {
+		AccountDao dao = new AccountDao();
+		return dao.exist(accountId);
+	}
+
 }

@@ -10,7 +10,7 @@ import spark.Request;
 
 public class AttributeFactory {
 	
-	private static String CONNECTIOPN = "_";
+	private static String CONNECTION = "_";
 	
 	private static String ACCOUNT_NAME = "accountName";
 	
@@ -31,8 +31,8 @@ public class AttributeFactory {
 			Stream.of(ic.getFields()).forEach(f -> {
 				try {
 					attribute.put(Meta.class.getSimpleName() 
-							+ CONNECTIOPN + ic.getSimpleName() 
-							+ CONNECTIOPN + f.getName(), f.get(ic));
+							+ CONNECTION + ic.getSimpleName() 
+							+ CONNECTION + f.getName(), f.get(ic));
 					
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 				}

@@ -29,6 +29,16 @@ public class AccountDao extends AbstractDao{
 		}
 	}
 	
+	public boolean exist(String accountId) {
+		try (Db db = open()) {
+			Account a = new Account();
+			
+			return db.from(a)
+					.where(a.getAccountId()).is(accountId)
+					.selectCount() > 0;
+		}
+	}
+	
 	public void store(Account account) {
 		try (Db db = open()) {
 			db.insert(account);

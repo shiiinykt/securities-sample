@@ -1,12 +1,18 @@
 package com.heroku.shiiinykt_securiteis_sample.line.impl;
 
 
+import java.io.IOException;
 import java.util.Date;
 
 import com.heroku.shiiinykt_securiteis_sample.line.LineInfo;
 import com.heroku.shiiinykt_securiteis_sample.line.LineInfoDao;
 import com.heroku.shiiinykt_securiteis_sample.line.LineService;
 import com.heroku.shiiinykt_securiteis_sample.utils.KeyGenUtil;
+import com.linecorp.bot.client.LineMessagingServiceBuilder;
+import com.linecorp.bot.model.PushMessage;
+import com.linecorp.bot.model.ReplyMessage;
+
+import lombok.SneakyThrows;
 
 public class LineServiceImpl implements LineService {
 
@@ -36,7 +42,7 @@ public class LineServiceImpl implements LineService {
 		String code = KeyGenUtil.getCode();
 		
 		while(dao.countByCode(code) != 0) {
-			code = KeyGenUtil.getOrderId();
+			code = KeyGenUtil.getCode();
 		}
 		
 		info.setCode(code);
@@ -56,5 +62,36 @@ public class LineServiceImpl implements LineService {
 		dao.store(info);
 	}
 
+	@SneakyThrows(IOException.class)
+	@Override
+	public void pushMessage(PushMessage pushMessage) {
+		LineMessagingServiceBuilder
+		.create(System.getenv("CHANNEL_ACCESS_TOKEN"))
+		.build()
+		.pushMessage(pushMessage)
+		.execute();
+		
+	}
+
+	@SneakyThrows(IOException.class)
+	@Override
+	public void replyMessage(ReplyMessage replyMessage) {
+		LineMessagingServiceBuilder
+		.create(System.getenv("CHANNEL_ACCESS_TOKEN"))
+		.build()
+		.replyMessage(replyMessage)
+		.execute();
+	}
+
+	@Override
+	public void inactivate(String userId) {
+		LineInfoDao dao = new LineInfoDao();
+		LineInfo info = dao.find(userId);
+		
+		info.setModified(new Date());
+		info.setStatus(LineInfo.INACTIVE);
+		
+		dao.store(info);		
+	}
 
 }
