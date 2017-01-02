@@ -39,7 +39,7 @@ public class CallbackController {
 
 	public static Route callback = (Request req, Response res) -> {
 
-		log.debug(req.body());
+		log.info(req.body());
 		
 		try {
 			CallbackRequest request = service.handle(req);
