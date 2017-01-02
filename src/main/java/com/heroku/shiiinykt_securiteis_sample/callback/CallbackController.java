@@ -71,7 +71,7 @@ public class CallbackController {
 		List<Action> actions = new ArrayList<Action>();
 		
 		for (int i = 0; i < Math.min(stocks.size(), 4); i++) {
-			actions.add(new PostbackAction(stocks.get(i).getName(), ""));
+			actions.add(new PostbackAction(stocks.get(i).getName(), "action=" + stocks.get(i).getName()));
 		}
 		
 		TemplateMessage templateMessage = new TemplateMessage("This is buttons template", new ButtonsTemplate("https://www.misedas.net/item_images/item_group/l/6066/1311.jpg", content.getText(), "", actions));
