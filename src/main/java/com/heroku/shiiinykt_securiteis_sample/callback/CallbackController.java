@@ -16,11 +16,13 @@ import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.event.CallbackRequest;
 import com.linecorp.bot.model.event.FollowEvent;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.PostbackEvent;
 import com.linecorp.bot.model.event.UnfollowEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.template.ButtonsTemplate;
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 import lombok.extern.slf4j.Slf4j;
 import spark.Request;
@@ -39,8 +41,6 @@ public class CallbackController {
 
 	public static Route callback = (Request req, Response res) -> {
 
-		log.info(req.body());
-		
 		try {
 			CallbackRequest request = service.handle(req);
 			request.getEvents().stream().forEach(event -> {
@@ -54,6 +54,8 @@ public class CallbackController {
 					
 				} else if (event instanceof UnfollowEvent) {
 					handelUnFollowEvnet((UnfollowEvent) event);
+				} else if (event instanceof PostbackEvent) { 
+					handlePostbackEvent((PostbackEvent) event);
 				}
 			});
 		} catch (Exception e) {
@@ -75,7 +77,7 @@ public class CallbackController {
 		List<Action> actions = new ArrayList<Action>();
 		
 		for (int i = 0; i < Math.min(stocks.size(), 4); i++) {
-			actions.add(new PostbackAction(stocks.get(i).getName(), "action=" + stocks.get(i).getName()));
+			actions.add(new PostbackAction(stocks.get(i).getCode() + "\n" + stocks.get(i).getName(), "action=" + stocks.get(i).getName()));
 		}
 		
 		TemplateMessage templateMessage = new TemplateMessage("This is buttons template", 
@@ -84,6 +86,9 @@ public class CallbackController {
 		
 		lineService.replyMessage(replyMessage);
 		
+	}
+	private static void handlePostbackEvent(PostbackEvent event) {
+		log.info(event.toString());
 	}
 	
 	private static void handelFollowEvnet(FollowEvent event) {
