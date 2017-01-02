@@ -74,7 +74,8 @@ public class CallbackController {
 			actions.add(new PostbackAction(stocks.get(i).getName(), "action=" + stocks.get(i).getName()));
 		}
 		
-		TemplateMessage templateMessage = new TemplateMessage("This is buttons template", new ButtonsTemplate("https://www.misedas.net/item_images/item_group/l/6066/1311.jpg", content.getText(), "", actions));
+		TemplateMessage templateMessage = new TemplateMessage("This is buttons template", 
+				new ButtonsTemplate("https://www.misedas.net/item_images/item_group/l/6066/1311.jpg", content.getText(), content.getText(), actions));
 		ReplyMessage replyMessage = new ReplyMessage(event.getReplyToken(), templateMessage);
 		
 		lineService.replyMessage(replyMessage);
