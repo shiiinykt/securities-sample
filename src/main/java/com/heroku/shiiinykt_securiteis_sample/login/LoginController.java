@@ -16,7 +16,7 @@ import spark.utils.StringUtils;
 
 public class LoginController {
 	
-	private static String NAME = "name";
+	private static String ID = "id";
 	private static String MESSAGE = "message";
 	
 	@Inject
@@ -44,7 +44,7 @@ public class LoginController {
 			res.redirect(redirect, 301);
 		}
 		
-		attribute.put(NAME, req.queryParams(Meta.Parameter.NAME));
+		attribute.put(ID, req.queryParams(Meta.Parameter.ID));
 		attribute.put(MESSAGE, Boolean.TRUE);
 		
 		return ViewUtil.render(attribute, Meta.Template.LOGIN);
