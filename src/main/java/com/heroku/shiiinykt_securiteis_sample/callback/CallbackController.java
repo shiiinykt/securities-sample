@@ -168,7 +168,7 @@ public class CallbackController {
 			StockOrder order = lineSession(event).attribute(ORDER);
 			order.setAmount(Integer.valueOf(((MessageEvent<TextMessageContent>) event).getMessage().getText()));
 			
-			lineSession(event).setAction(LineSession.PROCESS_SET_AMMOUNT);
+			lineSession(event).setAction(LineSession.PROCESS_SET_ORDER_TYPE);
 
 		} else {
 			TextMessage text = new TextMessage("注文数量を入力してください。");
