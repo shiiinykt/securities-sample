@@ -12,6 +12,7 @@ import org.cache2k.Cache2kBuilder;
 
 import com.google.inject.Inject;
 import com.heroku.shiiinykt_securiteis_sample.line.LineService;
+import com.heroku.shiiinykt_securiteis_sample.order.OrderService;
 import com.heroku.shiiinykt_securiteis_sample.order.StockOrder;
 import com.heroku.shiiinykt_securiteis_sample.stock.Stock;
 import com.heroku.shiiinykt_securiteis_sample.stock.StockService;
@@ -46,6 +47,9 @@ public class CallbackController {
 	private static LineService lineService;
 	@Inject
 	private static StockService stockService;
+	@Inject
+	private static OrderService orderService;
+	
 	
 	private static Cache<String, LineSession> lineSessionStore = new Cache2kBuilder<String, LineSession>() {}
 												.expireAfterWrite(5, TimeUnit.MINUTES)
@@ -254,6 +258,8 @@ public class CallbackController {
 	}
 
 	private static void processCommit(Event event) {
+		orderService.store(lineSession(event).attribute(ORDER));
+		
 		lineSession(event).removeAttribute(ORDER);
 		
 		lineSession(event).setAction(LineSession.PROCESS_BEGIN);
@@ -261,6 +267,7 @@ public class CallbackController {
 		TextMessage text = new TextMessage("注文が完了しました。");
 		PushMessage message = new PushMessage(event.getSource().getUserId(), text);
 		lineService.pushMessage(message);
+		
 		
 	};
 	
