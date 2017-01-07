@@ -13,7 +13,7 @@ public class OrderReference {
 	@IQColumn
 	private String orderId;
 	@IQColumn
-	private int amount;
+	private Integer amount;
 	@IQColumn
 	private String orderType;
 	@IQColumn

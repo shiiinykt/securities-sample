@@ -215,6 +215,8 @@ public class CallbackController {
 			order.setPrice(Double.valueOf(((MessageEvent<TextMessageContent>) event).getMessage().getText()));
 			
 			lineSession(event).setAction(LineSession.PROCESS_SET_DEPOSIT_TYPE);
+			
+			changeSetDepositType(event);
 		}
 	}
 	
