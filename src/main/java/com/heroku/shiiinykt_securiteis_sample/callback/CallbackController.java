@@ -2,6 +2,7 @@ package com.heroku.shiiinykt_securiteis_sample.callback;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,6 +95,7 @@ public class CallbackController {
 				
 			});
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ViewUtil.render(new Callback("NG"));
 
 		}
@@ -108,6 +110,7 @@ public class CallbackController {
 			lineSessionStore.put(userId, new LineSession());
 		}
 		
+		
 		return lineSessionStore.get(userId);
 	}
 	
@@ -115,7 +118,7 @@ public class CallbackController {
 		StockOrder order = new StockOrder();
 		order.setAccountId(lineService.find(event.getSource().getUserId()).getAccountId());
 		lineSession(event).attribute(ORDER, order);
-		
+
 		lineSession(event).setAction(LineSession.PROCESS_SET_CODE);
 		
 		TextMessage text = new TextMessage("銘柄コードまはた銘柄名を入力してください。");
@@ -274,16 +277,20 @@ public class CallbackController {
 	}
 	
 	public static class LineSession {
-		public static String PROCESS_BEGIN;
-		public static String PROCESS_SET_CODE;
-		public static String PROCESS_SET_AMMOUNT;
-		public static String PROCESS_SET_ORDER_TYPE;
-		public static String PROCESS_SET_PRICE;
-		public static String PROCESS_SET_DEPOSIT_TYPE;
-		public static String PROCESS_COMMIT;
+		public static String PROCESS_BEGIN = "pb";
+		public static String PROCESS_SET_CODE = "psc";
+		public static String PROCESS_SET_AMMOUNT = "psa";
+		public static String PROCESS_SET_ORDER_TYPE = "pso";
+		public static String PROCESS_SET_PRICE = "psp";
+		public static String PROCESS_SET_DEPOSIT_TYPE = "psd";
+		public static String PROCESS_COMMIT = "pc";
 		
 		private String action = PROCESS_BEGIN;
 		private Map<String, Object> attributes;
+		
+		LineSession() {
+			attributes = new HashMap<String, Object>();
+		}
 		
 		public String getAction() {
 			return action;
