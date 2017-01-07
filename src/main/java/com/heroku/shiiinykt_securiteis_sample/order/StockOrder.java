@@ -29,7 +29,7 @@ public class StockOrder {
 	@IQColumn
 	private String code;
 	@IQColumn
-	private int amount;
+	private Integer amount;
 	@IQColumn(name = "order_type")
 	private String orderType;
 	@IQColumn
@@ -49,7 +49,7 @@ public class StockOrder {
 	public StockOrder(
 				String accountId,
 				String code,
-				int amount,
+				Integer amount,
 				Double price,
 				String orderType,
 				String depositType) {
