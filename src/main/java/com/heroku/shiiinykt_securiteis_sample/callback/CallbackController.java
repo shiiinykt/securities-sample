@@ -181,7 +181,7 @@ public class CallbackController {
 		actions.add(new PostbackAction("指値", StockOrder.LIMIT));
 		
 		TemplateMessage templateMessage = new TemplateMessage("注文区分選択",
-			new ButtonsTemplate(null, "注文区分", "注文区分をお選びください。：", actions));
+			new ButtonsTemplate(null, "注文区分", "注文区分をお選びください。", actions));
 		PushMessage pushMessage = new PushMessage(event.getSource().getUserId(), templateMessage);
 
 		lineService.pushMessage(pushMessage);
