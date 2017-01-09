@@ -29,13 +29,13 @@ public class AccountDao extends AbstractDao{
 		}
 	}
 	
-	public boolean exist(String accountId) {
+	public long count(String accountId) {
 		try (Db db = open()) {
 			Account a = new Account();
 			
 			return db.from(a)
 					.where(a.getAccountId()).is(accountId)
-					.selectCount() > 0;
+					.selectCount();
 		}
 	}
 	

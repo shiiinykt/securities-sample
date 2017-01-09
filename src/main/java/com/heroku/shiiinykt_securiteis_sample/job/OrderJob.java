@@ -14,6 +14,7 @@ import com.heroku.shiiinykt_securiteis_sample.order.OrderService;
 import com.heroku.shiiinykt_securiteis_sample.order.StockOrder;
 import com.heroku.shiiinykt_securiteis_sample.stock.Stock;
 import com.heroku.shiiinykt_securiteis_sample.stock.StockService;
+import com.heroku.shiiinykt_securities_sample.Meta;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.message.TextMessage;
 
@@ -42,7 +43,7 @@ public class OrderJob implements Job {
 			LineInfo info = lineService.findByAccountId(so.getAccountId());
 			if (info != null) {
 			
-				TextMessage textMessage = new TextMessage(so.toString());
+				TextMessage textMessage = new TextMessage("注文が約定いたしました。\n" + Meta.URL.APP_URL + Meta.URL.REFERENCE_ORDER);
 				PushMessage pushMessage = new PushMessage(info.getUserId(), textMessage);
 				lineService.pushMessage(pushMessage);
 			}

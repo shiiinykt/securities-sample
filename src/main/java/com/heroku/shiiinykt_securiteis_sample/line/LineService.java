@@ -24,4 +24,6 @@ public interface LineService {
 	
 	public void inactivate(String userId);
 	
+	public boolean checkActiveUser(String userId);
+	
 }

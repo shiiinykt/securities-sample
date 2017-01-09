@@ -25,7 +25,7 @@ public class LineServiceImpl implements LineService {
 	@Override
 	public LineInfo findByAccountId(String accountId) {
 		LineInfoDao dao = new LineInfoDao();
-		return dao.findByAccountId(accountId);
+		return dao.findByAccountIdOnlyActiveUser(accountId);
 	}
 	
 	@Override
@@ -92,6 +92,12 @@ public class LineServiceImpl implements LineService {
 		info.setStatus(LineInfo.INACTIVE);
 		
 		dao.store(info);		
+	}
+
+	@Override
+	public boolean checkActiveUser(String userId) {
+		LineInfoDao dao = new LineInfoDao();
+		return dao.countOnlyActiveUser(userId) > 0;
 	}
 
 }

@@ -67,6 +67,10 @@ public class CallbackController {
 					handelUnFollowEvnet((UnfollowEvent) event);
 				}
 				
+				if (!lineService.checkActiveUser(event.getSource().getUserId())) {
+					return;
+				}
+				
 				////ORDER EVENT/////
 				String action = lineSession(event).getAction();
 				if (LineSession.PROCESS_BEGIN.equals(action)) {
@@ -269,13 +273,14 @@ public class CallbackController {
 	private static void handelFollowEvnet(FollowEvent event) {
 		String code = lineService.registory(event.getSource().getUserId());
 		
-		TextMessage textMessage = new TextMessage(Meta.URL.APP_URL + Meta.URL.LINE_REGISTORY + "?" + Meta.Parameter.CODE + "=" + code);
+		TextMessage textMessage = new TextMessage("以下URLをクリックしてアカウント登録を完了させてください。\n" + Meta.URL.APP_URL + Meta.URL.LINE_REGISTORY + "?" + Meta.Parameter.CODE + "=" + code);
 		ReplyMessage replyMessage = new ReplyMessage(event.getReplyToken(), textMessage);
 		lineService.replyMessage(replyMessage);
 	}
 	
 	private static void handelUnFollowEvnet(UnfollowEvent event) {
 		lineService.inactivate(event.getSource().getUserId());
+		lineSessionStore.remove(event.getSource().getUserId());
 	}
 	
 	public static class LineSession {

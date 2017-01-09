@@ -15,7 +15,7 @@ public class LineInfoDao extends AbstractDao {
 		}
 	}
 
-	public LineInfo findByAccountId(String accountId) {
+	public LineInfo findByAccountIdOnlyActiveUser(String accountId) {
 		try (Db db = open()) {
 			LineInfo l = new LineInfo();
 			
@@ -42,6 +42,17 @@ public class LineInfoDao extends AbstractDao {
 			
 			return db.from(l)
 					.where(l.getCode()).is(code)
+					.selectCount();
+		}
+	}
+	
+	public long countOnlyActiveUser(String userId) {
+		try (Db db = open()) {
+			LineInfo l = new LineInfo();
+			
+			return db.from(l)
+					.where(l.getUserId()).is(userId)
+					.and(l.getStatus()).is(LineInfo.ACTICVE)
 					.selectCount();
 		}
 	}

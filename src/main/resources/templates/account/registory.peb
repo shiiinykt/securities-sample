@@ -6,6 +6,14 @@
 </div>
 
 <div class="block col-md-6">
+{% if message == true %}
+	<div class="row">
+		<div class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	 		アカウントIDがすでに存在します。
+		</div>
+	</div>
+{% endif %}
 	<form method="post">
 		<div class="panel panel-default form-group">
 	  		<div class="panel-body">
@@ -23,7 +31,7 @@
 				</div>
 				<div class="form-group">
 					<label for="{{ Meta_Parameter_PIN }}" class="control-label">PIN</label>
-					<input type="password" class="form-control" name="{{ Meta_Parameter_PIN }}" required>
+					<input type="password" pattern="[0-9]{4}" class="form-control" name="{{ Meta_Parameter_PIN }}" placeholder="半角数字4文字を指定してください。" required>
 				</div>
 				<input class="btn btn-primary pull-right" type="submit" value="登録">
 			</div>

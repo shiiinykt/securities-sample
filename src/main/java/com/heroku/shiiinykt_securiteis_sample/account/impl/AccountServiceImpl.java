@@ -1,5 +1,7 @@
 package com.heroku.shiiinykt_securiteis_sample.account.impl;
 
+import java.util.Date;
+
 import com.heroku.shiiinykt_securiteis_sample.account.Account;
 import com.heroku.shiiinykt_securiteis_sample.account.AccountDao;
 import com.heroku.shiiinykt_securiteis_sample.account.AccountService;
@@ -20,6 +22,9 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public void store(Account account) {
+		account.setCreated(new Date());
+		account.setModified(new Date());
+		
 		AccountDao dao = new AccountDao();
 		dao.store(account);
 	}
@@ -27,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public boolean exist(String accountId) {
 		AccountDao dao = new AccountDao();
-		return dao.exist(accountId);
+		return dao.count(accountId) > 0;
 	}
 
 }

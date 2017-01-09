@@ -31,5 +31,9 @@ public class Account {
 	public void setPasswordWithHash(String password) {
 		this.password = DigestUtils.sha256Hex(password);
 	}
+	
+	public void setPinWithHash(String pin) {
+		this.pin = DigestUtils.sha256Hex(pin);
+	}
 
 }

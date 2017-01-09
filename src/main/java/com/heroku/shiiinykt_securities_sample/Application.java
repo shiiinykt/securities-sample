@@ -57,7 +57,7 @@ public class Application {
 		get(Meta.URL.LINE_REGISTORY, LineController.registory);
 		
 		get(Meta.URL.ACCOUNT_REGISTORY, AccountContoraller.registory);
-
+		post(Meta.URL.ACCOUNT_REGISTORY, AccountContoraller.handleRegistory);
 		
 	}
 	
@@ -71,7 +71,9 @@ public class Application {
 				requestStaticInjection(ReferenceController.class);
 				requestStaticInjection(CallbackController.class);
 				requestStaticInjection(LineController.class);
+				requestStaticInjection(AccountContoraller.class);
 				requestStaticInjection(OrderJob.class);
+				
 			}
 		});
 	}
