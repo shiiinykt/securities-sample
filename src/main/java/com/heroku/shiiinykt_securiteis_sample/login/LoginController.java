@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.inject.Inject;
 import com.heroku.shiiinykt_securiteis_sample.account.Account;
 import com.heroku.shiiinykt_securiteis_sample.account.AccountService;
+import com.heroku.shiiinykt_securiteis_sample.utils.EncoderUtil;
 import com.heroku.shiiinykt_securiteis_sample.utils.ViewUtil;
 import com.heroku.shiiinykt_securities_sample.AttributeFactory;
 import com.heroku.shiiinykt_securities_sample.Meta;
@@ -18,12 +19,14 @@ public class LoginController {
 	
 	private static String ID = "id";
 	private static String MESSAGE = "message";
+	private static String REDIRECT = "redirect";
 	
 	@Inject
 	private static AccountService service;
 
 	public static Route index = (Request req, Response res) -> {
 		Map<String, Object> attribute = AttributeFactory.create(req);
+		attribute.put(REDIRECT, EncoderUtil.urlEncode(req.queryParams(Meta.Parameter.REDIRECT)));
 
 		return ViewUtil.render(attribute, Meta.Template.LOGIN);
 	};

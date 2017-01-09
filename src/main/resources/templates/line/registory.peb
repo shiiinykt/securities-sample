@@ -10,7 +10,7 @@
 		<div class="col-md-12">登録が完了しました。</div>
 	</div>
 	<div class="row">
-		<div class="col-md-12"><a href="javascript:window.open('about:blank','_self').close();">このページを閉じる</a></div>
+		<div class="col-md-12"><a href="https://line.me/R/ti/p/if5ta_t4pM">戻る</a></div>
 	</div>
 </div>
 {% endblock %}

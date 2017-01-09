@@ -10,6 +10,7 @@ import com.heroku.shiiinykt_securities_sample.Meta;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.utils.StringUtils;
 
 public class AccountContoraller {
 
@@ -40,7 +41,11 @@ public class AccountContoraller {
 			
 			service.store(account);
 			
-			res.redirect(Meta.URL.INDEX);
+			String redirect = Meta.URL.INDEX;
+			if (StringUtils.isNotEmpty(req.queryParams(Meta.Parameter.REDIRECT))) {
+				redirect = req.queryParams(Meta.Parameter.REDIRECT);
+			}
+			res.redirect(redirect, 301);
 		}
 		
 		attributes.put(ID, req.queryParams(Meta.Parameter.ID));

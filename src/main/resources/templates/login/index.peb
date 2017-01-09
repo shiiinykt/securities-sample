@@ -15,7 +15,7 @@
 	</div>
 {% endif %}
 	<div class="panel">
-			<a href="{{ Meta_URL_ACCOUNT_REGISTORY }}" class="pull-right">口座開設</a>
+			<a href="{{ Meta_URL_ACCOUNT_REGISTORY }}?{{ Meta_Parameter_REDIRECT }}={{ redirect }}" class="pull-right">口座開設</a>
 	</div>
 	<form method="post">
 		<div class="panel panel-default form-group">
