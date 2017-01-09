@@ -24,7 +24,7 @@
 				<span class="stock-info">{{ order.code}}&nbsp;&nbsp;{{ order.market }}</span></td>
 				<td>{{ order.amount | numberformat("#,###株") }}</td>
 				<td>{{ convertOrderType(order.orderType) }}<br>
-				<td>{{ order.price | numberformat("#,###.#円") }}</td>
+				{{ order.price | numberformat("#,###.#円") }}</td>
 				<td>{{ convertDepositType(order.depositType) }}</td>
 				<td>{{ convertStatus(order.status) }}</td>
 			</tr>
