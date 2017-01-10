@@ -293,7 +293,7 @@ public class CallbackController {
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("注文は以下のとおりです。\n\n");
-		sb.append("・銘柄コード/銘柄名\n");
+		sb.append("・銘柄コード/銘柄名：");
 		sb.append("　" + order.getCode() + "/" + stock.getName() + "\n");
 		sb.append("・数量：");
 		sb.append("　" + order.getAmount() + "株\n");
@@ -302,7 +302,7 @@ public class CallbackController {
 			sb.append("　成行\n");
 		} else {
 			sb.append("　指値\n");
-			sb.append("・価額\n");
+			sb.append("・価額：");
 			sb.append("　" + order.getPrice() + "円\n");
 		}
 		sb.append("・預り区分：");
