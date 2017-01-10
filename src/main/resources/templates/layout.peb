@@ -37,6 +37,7 @@
 					<li><a href="{{ Meta_URL_REFERENCE_ORDER }}">注文履歴</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+					<li><a href="{{ Meta_URL_REDIRECT_URL }}">LINE</a></li>
  					<li>
 {% if accountName is empty %}
  						<a href="{{ Meta_URL_LOGIN }}">ログイン</a>

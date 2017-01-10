@@ -293,25 +293,27 @@ public class CallbackController {
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("注文は以下のとおりです。\n\n");
-		sb.append("・銘柄コード/銘柄名：");
-		sb.append("　" + order.getCode() + "/" + stock.getName() + "\n");
+		sb.append("・銘柄コード：");
+		sb.append(order.getCode() + "\n");
+		sb.append("・銘柄名：");
+		sb.append(stock.getName() + "\n");
 		sb.append("・数量：");
-		sb.append("　" + order.getAmount() + "株\n");
+		sb.append(order.getAmount() + "株\n");
 		sb.append("・注文区分：");
 		if (StockOrder.MARKET.equals(order.getOrderType())) {
-			sb.append("　成行\n");
+			sb.append("成行\n");
 		} else {
-			sb.append("　指値\n");
+			sb.append("指値\n");
 			sb.append("・価額：");
-			sb.append("　" + order.getPrice() + "円\n");
+			sb.append(order.getPrice() + "円\n");
 		}
 		sb.append("・預り区分：");
 		if (StockOrder.SPECIFIC.equals(order.getDepositType())) {
-			sb.append("　特定\n");
+			sb.append("特定");
 		} else if (StockOrder.GENERAL.equals(order.getDepositType())) {
-			sb.append("　一般\n");
+			sb.append("一般");
 		} else if (StockOrder.NISA.equals(order.getDepositType())) {
-			sb.append("　NISA\n");
+			sb.append("NISA");
 		}
 		TextMessage textMessage = new TextMessage(sb.toString());
 		PushMessage pushMessage = new PushMessage(event.getSource().getUserId(), textMessage);
