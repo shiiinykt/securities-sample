@@ -2,6 +2,8 @@ package com.heroku.shiiinykt_securiteis_sample.login;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.inject.Inject;
 import com.heroku.shiiinykt_securiteis_sample.account.Account;
 import com.heroku.shiiinykt_securiteis_sample.account.AccountService;
@@ -13,7 +15,6 @@ import com.heroku.shiiinykt_securities_sample.Meta;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-import spark.utils.StringUtils;
 
 public class LoginController {
 	
@@ -26,7 +27,10 @@ public class LoginController {
 
 	public static Route index = (Request req, Response res) -> {
 		Map<String, Object> attribute = AttributeFactory.create(req);
-		attribute.put(REDIRECT, EncoderUtil.urlEncode(req.queryParams(Meta.Parameter.REDIRECT)));
+		
+		if (StringUtils.isNotEmpty(req.queryParams(Meta.Parameter.REDIRECT))) {
+			attribute.put(REDIRECT, EncoderUtil.urlEncode(req.queryParams(Meta.Parameter.REDIRECT)));
+		}
 
 		return ViewUtil.render(attribute, Meta.Template.LOGIN);
 	};
