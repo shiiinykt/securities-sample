@@ -164,7 +164,7 @@ public class CallbackController {
 			List<Action> actions = new ArrayList<Action>();
 			
 			for (int i = 0; i < Math.min(stocks.size(), 4); i++) {
-				actions.add(new PostbackAction(stocks.get(i).getCode() + "：" + stocks.get(i).getName(),stocks.get(i).getCode()));
+				actions.add(new PostbackAction(stocks.get(i).getCode() + "/" + stocks.get(i).getName(),stocks.get(i).getCode()));
 			}
 			
 			TemplateMessage templateMessage = new TemplateMessage("銘柄検索",
@@ -292,20 +292,20 @@ public class CallbackController {
 		Stock stock = stockService.find(order.getCode());
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append("注文は以下のとおりです。\n");
-		sb.append("銘柄コード：銘柄名\n");
-		sb.append("　" + order.getCode() + "：" + stock.getName() + "\n");
-		sb.append("数量\n");
+		sb.append("注文は以下のとおりです。\n\n");
+		sb.append("・銘柄コード/銘柄名\n");
+		sb.append("　" + order.getCode() + "/" + stock.getName() + "\n");
+		sb.append("・数量：");
 		sb.append("　" + order.getAmount() + "株\n");
-		sb.append("注文区分\n");
+		sb.append("・注文区分：");
 		if (StockOrder.MARKET.equals(order.getOrderType())) {
 			sb.append("　成行\n");
 		} else {
 			sb.append("　指値\n");
-			sb.append("価額");
+			sb.append("・価額\n");
 			sb.append("　" + order.getPrice() + "円\n");
 		}
-		sb.append("預り区分\n");
+		sb.append("・預り区分：");
 		if (StockOrder.SPECIFIC.equals(order.getDepositType())) {
 			sb.append("　特定\n");
 		} else if (StockOrder.GENERAL.equals(order.getDepositType())) {
