@@ -18,7 +18,7 @@ public class Meta {
 		public static final String LINE_REGISTORY = LINE + "/registory";
 		public static final String ACCOUNT = "/account";
 		public static final String ACCOUNT_REGISTORY = ACCOUNT + "/registory";
-		
+		public static final String REDIRECT_URL = "https://line.me/R/ti/p/if5ta_t4pM";
 	}
 	
 	public class Parameter {

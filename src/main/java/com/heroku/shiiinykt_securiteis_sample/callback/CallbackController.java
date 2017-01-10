@@ -21,6 +21,7 @@ import com.heroku.shiiinykt_securities_sample.Meta;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.action.Action;
+import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.event.CallbackRequest;
 import com.linecorp.bot.model.event.Event;
@@ -32,6 +33,8 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.template.ButtonsTemplate;
+import com.linecorp.bot.model.message.template.ConfirmTemplate;
+
 import java.util.concurrent.TimeUnit;
 
 import spark.Request;
@@ -40,6 +43,8 @@ import spark.Route;
 
 public class CallbackController {
 	private static String ORDER = "order";
+	private static String YES = "yes";
+	private static String NO = "no";
 	
 	@Inject
 	private static CallbackService service;
@@ -73,7 +78,9 @@ public class CallbackController {
 				
 				////ORDER EVENT/////
 				String action = lineSession(event).getAction();
-				if (LineSession.PROCESS_BEGIN.equals(action)) {
+				if (LineSession.PAUSE.equals(action)) {
+					changeBegin(event);
+				} else if (LineSession.PROCESS_BEGIN.equals(action)) {
 					processBegin(event);
 				} else if (LineSession.PROCESS_SET_CODE.equals(action)) {
 					processSetCode(event);
@@ -85,6 +92,8 @@ public class CallbackController {
 					processSetPrice(event);
 				} else if (LineSession.PROCESS_SET_DEPOSIT_TYPE.equals(action)) {
 					processSetDepositType(event);
+				} else if (LineSession.PROCESS_COMMIT.equals(action)) {
+					processCommit(event);
 				}
 			});
 		} catch (Exception e) {
@@ -107,13 +116,33 @@ public class CallbackController {
 		return lineSessionStore.get(userId);
 	}
 	
-	private static void processBegin(Event event) {
-		StockOrder order = new StockOrder();
-		order.setAccountId(lineService.find(event.getSource().getUserId()).getAccountId());
-		lineSession(event).attribute(ORDER, order);
+	private static void changeBegin(Event event) {
+		lineSession(event).setAction(LineSession.PROCESS_BEGIN);
 		
-		changeSetCode(event);
-
+		List<Action> actions = new ArrayList<Action>();
+		actions.add(new MessageAction("はい", YES));
+		actions.add(new MessageAction("いいえ", NO));
+		
+		TemplateMessage templateMessage = new TemplateMessage("注文開始",
+			new ConfirmTemplate("注文を開始しますか。", actions));
+		PushMessage pushMessage = new PushMessage(event.getSource().getUserId(), templateMessage);
+		lineService.pushMessage(pushMessage);
+	}
+	
+	private static void processBegin(Event event) {
+		if (event instanceof MessageEvent<?>
+			&& ((MessageEvent<?>) event).getMessage() instanceof TextMessageContent) {
+			
+			if (YES.equals(((TextMessageContent)((MessageEvent<?>) event).getMessage()).getText())) {
+				StockOrder order = new StockOrder();
+				order.setAccountId(lineService.find(event.getSource().getUserId()).getAccountId());
+				lineSession(event).attribute(ORDER, order);
+				
+				changeSetCode(event);
+			} else if(NO.equals(((TextMessageContent)((MessageEvent<?>) event).getMessage()).getText())) {
+				lineSession(event).setAction(LineSession.PAUSE);
+			}
+		}
 	};
 
 	private static void changeSetCode(Event event) {
@@ -204,7 +233,7 @@ public class CallbackController {
 	private static void changeSetPrice(Event event) {
 		lineSession(event).setAction(LineSession.PROCESS_SET_PRICE);
 
-		TextMessage text = new TextMessage("価格を入力してください。");
+		TextMessage text = new TextMessage("価額を入力してください。");
 		PushMessage message = new PushMessage(event.getSource().getUserId(), text);
 		lineService.pushMessage(message);
 	}
@@ -253,21 +282,77 @@ public class CallbackController {
 			StockOrder order = lineSession(event).attribute(ORDER);
 			order.setDepositType(((PostbackEvent) event).getPostbackContent().getData());
 			
-			processCommit(event);
+			printOrder(event);
+			changeCommit(event);
 		}
+	}
+	
+	private static void printOrder(Event event) {
+		StockOrder order = lineSession(event).attribute(ORDER);
+		Stock stock = stockService.find(order.getCode());
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("注文は以下のとおりです。\n");
+		sb.append("銘柄コード：銘柄名\n");
+		sb.append("　" + order.getCode() + "：" + stock.getName() + "\n");
+		sb.append("数量\n");
+		sb.append("　" + order.getAmount() + "株\n");
+		sb.append("注文区分\n");
+		if (StockOrder.MARKET.equals(order.getOrderType())) {
+			sb.append("　成行\n");
+		} else {
+			sb.append("　指値\n");
+			sb.append("価額");
+			sb.append("　" + order.getPrice() + "円\n");
+		}
+		sb.append("預り区分\n");
+		if (StockOrder.SPECIFIC.equals(order.getDepositType())) {
+			sb.append("　特定\n");
+		} else if (StockOrder.GENERAL.equals(order.getDepositType())) {
+			sb.append("　一般\n");
+		} else if (StockOrder.NISA.equals(order.getDepositType())) {
+			sb.append("　NISA\n");
+		}
+		TextMessage textMessage = new TextMessage(sb.toString());
+		PushMessage pushMessage = new PushMessage(event.getSource().getUserId(), textMessage);
+		lineService.pushMessage(pushMessage);
+	}
+	
+	private static void changeCommit(Event event) {
+		lineSession(event).setAction(LineSession.PROCESS_COMMIT);
+
+		List<Action> actions = new ArrayList<Action>();
+		actions.add(new MessageAction("はい", YES));
+		actions.add(new MessageAction("いいえ", NO));
+		
+		TemplateMessage templateMessage = new TemplateMessage("注文確認",
+			new ConfirmTemplate("注文を確定しますか。", actions));
+		PushMessage pushMessage = new PushMessage(event.getSource().getUserId(), templateMessage);
+		lineService.pushMessage(pushMessage);
 	}
 
 	private static void processCommit(Event event) {
-		orderService.store(lineSession(event).attribute(ORDER));
+		if (event instanceof MessageEvent<?>
+		&& ((MessageEvent<?>) event).getMessage() instanceof TextMessageContent) {
 		
-		lineSession(event).removeAttribute(ORDER);
-		
-		lineSession(event).setAction(LineSession.PROCESS_BEGIN);
-		
-		TextMessage text = new TextMessage("注文が完了しました。");
-		PushMessage message = new PushMessage(event.getSource().getUserId(), text);
-		lineService.pushMessage(message);
-		
+			if (YES.equals(((TextMessageContent)((MessageEvent<?>) event).getMessage()).getText())) {
+				orderService.store(lineSession(event).attribute(ORDER));
+				
+				lineSession(event).removeAttribute(ORDER);
+				lineSession(event).setAction(LineSession.PAUSE);
+				
+				TextMessage text = new TextMessage("注文が完了しました。");
+				PushMessage message = new PushMessage(event.getSource().getUserId(), text);
+				lineService.pushMessage(message);
+			} else if (NO.equals(((TextMessageContent)((MessageEvent<?>) event).getMessage()).getText())) {
+				lineSession(event).removeAttribute(ORDER);
+				lineSession(event).setAction(LineSession.PAUSE);
+				
+				TextMessage text = new TextMessage("注文を取り消しました。");
+				PushMessage message = new PushMessage(event.getSource().getUserId(), text);
+				lineService.pushMessage(message);
+			}
+		} 		
 	};
 	
 	private static void handelFollowEvnet(FollowEvent event) {
@@ -284,6 +369,7 @@ public class CallbackController {
 	}
 	
 	public static class LineSession {
+		public static String PAUSE = "p";
 		public static String PROCESS_BEGIN = "pb";
 		public static String PROCESS_SET_CODE = "psc";
 		public static String PROCESS_SET_AMMOUNT = "psa";
@@ -292,7 +378,7 @@ public class CallbackController {
 		public static String PROCESS_SET_DEPOSIT_TYPE = "psd";
 		public static String PROCESS_COMMIT = "pc";
 		
-		private String action = PROCESS_BEGIN;
+		private String action = PAUSE;
 		private Map<String, Object> attributes;
 		
 		LineSession() {
